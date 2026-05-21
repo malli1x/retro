@@ -130,7 +130,7 @@ $avatarLetter = strtoupper(substr($userEmail, 0, 1));
 
     <!-- FOOTER -->
     <footer class="acc-footer">
-        <p>© RetroTech Hub 2024 — Всі права захищені</p>
+        <p>© RetroTech Hub 2026</p>
     </footer>
 
     <script src="account.js"></script>
