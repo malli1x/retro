@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RetroTech Hub — Вінтажна техніка</title>
+  <!-- Підключення шрифтів -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <!-- Підключення зовнішнього CSS файлу -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- НАВІГАЦІЯ -->
+  <nav>
+    <div class="nav-top">
+      <!-- Змінюємо href="#" на href="/" -->
+      <a class="logo" href="index.html">
+        <div class="logo-icon">📻</div>
+        <div>RETROTECH<br>HUB</div>
+      </a>
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"
+          style="color:#7A7265;flex-shrink:0">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="text" placeholder="Пошук камери, телефону, аудіо...">
+      </div>
+        <!-- Кнопка кошика в навігації -->
+        <a class="nav-action" href="#" id="cart-btn" onclick="toggleCart(event)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <!-- Бейдж з кількістю товарів -->
+          <div class="badge" id="cart-badge">0</div>
+          Кошик
+        </a>
+
+        <a class="nav-action" href="modal.html" id="account-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          Акаунт
+        </a>
+
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="active">Каталог</a>
+      <a href="pronas.html">Про нас</a>
+      <a href="contact.html">Контакти</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-text">VINTAGE</div>
+    <div class="hero-content">
+      <h1>ЗНАЙДИ СВІЙ<br><span>ІДЕАЛЬНИЙ ВІНТАЖ</span></h1>
+      <p>Ексклюзивна ретро-техніка та перевірені часом гаджети</p>
+      <a href="#catalog" class="hero-btn">Перейти до каталогу</a>
+    </div>
+  </section>
+
+  <!-- КАТЕГОРІЇ -->
+  <section class="section">
+    <h2 class="section-title">Популярні категорії</h2>
+    <div class="categories">
+      <a class="cat-card" href="#catalog" onclick="filterBy('Камери')">
+        <div class="cat-icon-wrap">📷</div>
+        <span class="cat-label">Компактні камери</span>
+      </a>
+      <a class="cat-card" href="#catalog" onclick="filterBy('Аудіо')">
+        <div class="cat-icon-wrap">🎧</div>
+        <span class="cat-label">Аудіотехніка</span>
+      </a>
+      <a class="cat-card" href="#catalog" onclick="filterBy('Ігри')">
+        <div class="cat-icon-wrap">🕹️</div>
+        <span class="cat-label">Ігрові консолі</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- КАТАЛОГ -->
+  <div class="catalog-section" id="catalog">
+    <aside class="filters">
+      <h3>Фільтри</h3>
+      <div class="filter-group">
+        <div class="filter-group-title">Бренд</div>
+        <div class="filter-item"><input type="checkbox" id="br-sony" data-filter="brand" data-value="Sony"><label for="br-sony">Sony</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-nintendo" data-filter="brand" data-value="Nintendo"><label for="br-nintendo">Nintendo</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-fuji" data-filter="brand" data-value="Fujifilm"><label for="br-fuji">Fujifilm</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-canon" data-filter="brand" data-value="Canon"><label for="br-canon">Canon</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-nikon" data-filter="brand" data-value="Nikon"><label for="br-nikon">Nikon</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-olympus" data-filter="brand" data-value="Olympus"><label for="br-olympus">Olympus</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-apple" data-filter="brand" data-value="Apple"><label for="br-apple">Apple</label></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-title">Стан</div>
+        <div class="filter-item"><input type="checkbox" id="cond-new" data-filter="condition" data-value="Як новий"><label for="cond-new">Як новий</label></div>
+        <div class="filter-item"><input type="checkbox" id="cond-good" data-filter="condition" data-value="Добрий стан"><label for="cond-good">Добрий</label></div>
+        <div class="filter-item"><input type="checkbox" id="cond-used" data-filter="condition" data-value="Сліди використання"><label for="cond-used">Сліди використання</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-title">Тип техніки</div>
+        <div class="filter-item"><input type="checkbox" id="type-cam" data-filter="type" data-value="Камери"><label for="type-cam">Камери</label></div>
+        <div class="filter-item"><input type="checkbox" id="type-audio" data-filter="type" data-value="Аудіо"><label for="type-audio">Аудіо</label></div>
+        <div class="filter-item"><input type="checkbox" id="type-game" data-filter="type" data-value="Ігри"><label for="type-game">Ігри</label></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-title">Ціна</div>
+        <div class="price-range">
+          <input type="range" min="0" max="15000" value="8000" id="price-slider">
+          <div class="price-labels">
+            <span>0 грн</span>
+            <span class="price-input-wrap">
+              <input type="number" id="price-input" min="0" max="15000" value="8000" step="100">
+              <span class="price-input-suffix">грн</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="catalog-right">
+      <h3>Каталог</h3>
+      <div class="products-grid" id="products-grid"></div>
+      <div class="pagination">
+        <div class="page-btn active">1</div>
+        <div class="page-btn">2</div>
+        <div class="page-btn">3</div>
+        <div class="page-btn">...</div>
+        <div class="page-btn">5</div>
+        <div class="page-btn">10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Про нас</h4>
+        <a href="#">Про нас</a>
+        <a href="#">Ретретована техніка</a>
+        <a href="#">Текі тахти</a>
+      </div>
+      <div class="footer-col">
+        <h4>Клієнтам</h4>
+        <a href="#">Повернення</a>
+        <a href="#">Часті питання</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <a href="#">Email</a>
+        <a href="#">Телефон</a>
+        <a href="#">Соціомережі</a>
+        <div class="social-links">
+          <a class="social-link" href="#">f</a>
+          <a class="social-link" href="#">in</a>
+          <a class="social-link" href="#">tg</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Підписка</h4>
+        <div class="footer-subscribe">
+          <input type="email" placeholder="Email">
+          <button>Підписатися</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      Всі права захищені © RetroTech Hub 2024
+    </div>
+  </footer>
+
+  <!-- ======== КОШИК (бічна панель) ======== -->
+  <!-- Затемнений фон при відкритому кошику -->
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart(event)"></div>
+
+  <!-- Бічна панель кошика -->
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <!-- Заголовок кошика -->
+    <div class="cart-header">
+      <h3>🛍️ Кошик</h3>
+      <!-- Кнопка закриття -->
+      <button class="cart-close" onclick="toggleCart(event)">&times;</button>
+    </div>
+
+    <!-- Список товарів у кошику -->
+    <div class="cart-items" id="cart-items">
+      <!-- Товари додаються динамічно через JS -->
+      <div class="cart-empty" id="cart-empty">Кошик порожній</div>
+    </div>
+
+    <!-- Нижня частина: загальна сума та кнопка оформлення -->
+    <div class="cart-footer" id="cart-footer" style="display:none;">
+      <!-- Рядок з загальною сумою -->
+      <div class="cart-total">
+        <span>Разом:</span>
+        <span id="cart-total-price">0 грн</span>
+      </div>
+      <!-- Кнопка оформлення замовлення -->
+      <button class="cart-checkout-btn" onclick="checkout()">Оформити замовлення</button>
+      <!-- Кнопка очищення кошика -->
+      <button class="cart-clear-btn" onclick="clearCart()">Очистити кошик</button>
+    </div>
+  </aside>
+
+
+
+
+  <!-- Підключення зовнішнього JavaScript файлу -->
+  <script src="script.js"></script>
+</body>
+
+</html>

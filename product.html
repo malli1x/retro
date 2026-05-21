@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Деталі товару — RetroTech Hub</title>
+  <link rel="stylesheet" href="modal.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Jost:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-page-container {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .product-page-img {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10rem;
+      aspect-ratio: 1;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+    }
+
+    .product-page-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-page-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .product-page-brand {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .product-page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .product-page-condition {
+      display: inline-flex;
+      align-items: center;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--olive);
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+
+    .product-page-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+
+    .product-page-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-large {
+      padding: 1.25rem 2rem;
+      font-size: 0.9rem;
+      background: var(--green-btn);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+      flex: 1;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .btn-large:hover {
+      background: var(--green-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--dark);
+      border: 1px solid var(--dark);
+    }
+
+    .btn-outline:hover {
+      background: var(--dark);
+      color: var(--warm-white);
+      border-color: var(--dark);
+    }
+
+    .product-not-found {
+      text-align: center;
+      padding: 10rem 2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--dark);
+      min-height: 60vh;
+    }
+
+    @media (max-width: 768px) {
+      .product-page-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin: 2rem auto;
+      }
+
+      .product-page-title {
+        font-size: 2.2rem;
+      }
+
+      .product-page-actions {
+        flex-direction: column;
+      }
+
+      .product-page-img {
+        font-size: 6rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-page-container {
+        padding: 0 1rem;
+        margin: 1.5rem auto;
+      }
+
+      .product-page-title {
+        font-size: 1.8rem;
+      }
+
+      .product-page-price {
+        font-size: 2rem;
+      }
+
+      .btn-large {
+        padding: 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* LIGHTBOX */
+    .product-page-img {
+      cursor: zoom-in;
+    }
+
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      animation: lightboxFadeIn 0.25s ease;
+    }
+
+    .lightbox-overlay.active {
+      display: flex;
+    }
+
+    .lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: lightboxZoomIn 0.3s ease;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes lightboxFadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes lightboxZoomIn {
+      from {
+        transform: scale(0.85);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- НАВІГАЦІЯ -->
+  <nav>
+    <div class="nav-top">
+      <a class="logo" href="index.html">
+        <div class="logo-icon">📻</div>
+        <div>RETROTECH<br>HUB</div>
+      </a>
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"
+          style="color:#7A7265;flex-shrink:0">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="text" placeholder="Пошук камери, телефону, аудіо...">
+      </div>
+      <!-- Кнопка кошика в навігації -->
+      <a class="nav-action" href="#" id="cart-btn" onclick="toggleCart(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <!-- Бейдж з кількістю товарів -->
+        <div class="badge" id="cart-badge">0</div>
+        Кошик
+      </a>
+
+      <a class="nav-action" href="modal.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        Акаунт
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Каталог</a>
+      <a href="pronas.html">Про нас</a>
+      <a href="contact.html">Контакти</a>
+    </div>
+  </nav>
+
+  <!-- КОНТЕНТ ТОВАРУ -->
+  <div id="product-content">
+    <div class="product-not-found" style="display: none;">Завантаження...</div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightbox-overlay">
+    <button class="lightbox-close" id="lightbox-close">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Про нас</h4>
+        <a href="#">Про нас</a>
+        <a href="#">Ретретована техніка</a>
+        <a href="#">Текі тахти</a>
+      </div>
+      <div class="footer-col">
+        <h4>Клієнтам</h4>
+        <a href="#">Повернення</a>
+        <a href="#">Часті питання</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <a href="#">Email</a>
+        <a href="#">Телефон</a>
+        <a href="#">Соціомережі</a>
+        <div class="social-links">
+          <a class="social-link" href="#">f</a>
+          <a class="social-link" href="#">in</a>
+          <a class="social-link" href="#">tg</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Підписка</h4>
+        <div class="footer-subscribe">
+          <input type="email" placeholder="Email">
+          <button>Підписатися</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      Всі права захищені © RetroTech Hub 2024
+    </div>
+  </footer>
+
+  <!-- ======== КОШИК (бічна панель) ======== -->
+  <!-- Затемнений фон при відкритому кошику -->
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart(event)"></div>
+
+  <!-- Бічна панель кошика -->
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <!-- Заголовок кошика -->
+    <div class="cart-header">
+      <h3>🛍️ Кошик</h3>
+      <!-- Кнопка закриття -->
+      <button class="cart-close" onclick="toggleCart(event)">&times;</button>
+    </div>
+
+    <!-- Список товарів у кошику -->
+    <div class="cart-items" id="cart-items">
+      <!-- Товари додаються динамічно через JS -->
+      <div class="cart-empty" id="cart-empty">Кошик порожній</div>
+    </div>
+
+    <!-- Нижня частина: загальна сума та кнопка оформлення -->
+    <div class="cart-footer" id="cart-footer" style="display:none;">
+      <!-- Рядок з загальною сумою -->
+      <div class="cart-total">
+        <span>Разом:</span>
+        <span id="cart-total-price">0 грн</span>
+      </div>
+      <!-- Кнопка оформлення замовлення -->
+      <button class="cart-checkout-btn" onclick="checkout()">Оформити замовлення</button>
+      <!-- Кнопка очищення кошика -->
+      <button class="cart-clear-btn" onclick="clearCart()">Очистити кошик</button>
+    </div>
+  </aside>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productName = urlParams.get('name');
+      const container = document.getElementById('product-content');
+
+      if (!productName) {
+        container.innerHTML = '<div class="product-not-found">Товар не знайдено</div>';
+        return;
+      }
+
+      // Завантажуємо товари з API
+      try {
+        const response = await fetch('http://localhost/retrotech/api.php');
+        if (!response.ok) throw new Error('Помилка завантаження');
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+        products = data;
+      } catch (err) {
+        console.error('Не вдалося завантажити товари:', err);
+        container.innerHTML = '<div class="product-not-found">Помилка завантаження товару</div>';
+        return;
+      }
+
+      const product = products.find(p => p.name === productName);
+
+      if (!product) {
+        container.innerHTML = '<div class="product-not-found">Товар не знайдено</div>';
+        return;
+      }
+
+      document.title = product.name + ' — RetroTech Hub';
+
+      container.innerHTML = `
+        <div class="product-page-container">
+          <div class="product-page-img" ${product.image ? `onclick="openLightbox('${product.image}', '${product.name}')"` : ''}>
+            ${product.image ? `<img src="${product.image}" alt="${product.name}">` : product.emoji}
+          </div>
+          <div class="product-page-info">
+            <div class="product-page-brand">${product.brand} • ${product.type}</div>
+            <h1 class="product-page-title">${product.name}</h1>
+            <div>
+              <span class="product-page-condition">Стан: ${product.condition}</span>
+            </div>
+            <div class="product-page-price">${product.price} грн</div>
+            <div class="product-page-actions">
+              <button class="btn-large" onclick="addToCart(event, '${product.name}')">Додати в кошик</button>
+              <button class="btn-large btn-outline" onclick="window.history.back()">Повернутися назад</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    // Lightbox
+    function openLightbox(src, alt) {
+      const overlay = document.getElementById('lightbox-overlay');
+      const img = document.getElementById('lightbox-img');
+      img.src = src;
+      img.alt = alt;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const overlay = document.getElementById('lightbox-overlay');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightbox-overlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget || e.target.id === 'lightbox-close') {
+        closeLightbox();
+      }
+    });
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+
+</html>

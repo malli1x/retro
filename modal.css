@@ -1,0 +1,170 @@
+/* Стилі для сторінки входу */
+.login-page {
+    background-color: #f4f0fa;
+    background-image: radial-gradient(#d1c4e9 2px, transparent 2px);
+    background-size: 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.login-container {
+    background: #ffffff;
+    padding: 50px;
+    width: 100%;
+    max-width: 450px;
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0 #000;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.login-logo {
+    text-decoration: none;
+    color: #000;
+    display: inline-block;
+    transition: transform 0.1s;
+}
+
+.login-logo:hover {
+    transform: scale(1.05);
+}
+
+.login-logo .logo-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.login-logo h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.login-header p {
+    color: #444;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+/* Форма */
+.field-group {
+    margin-bottom: 25px;
+}
+
+.field-group label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.field-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #000;
+    background: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    transition: box-shadow 0.1s, transform 0.1s;
+    box-shadow: 2px 2px 0 #000;
+    box-sizing: border-box;
+}
+
+.field-group input:focus {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0 #000;
+    background: #ffffcc; /* Light yellow focus */
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #000;
+}
+
+.forgot-link {
+    color: #000;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.forgot-link:hover {
+    color: #ff00ff;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: #00ffff; /* Cyan */
+    color: #000;
+    border: 2px solid #000;
+    text-transform: uppercase;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 4px 4px 0 #000;
+}
+
+.submit-btn:hover {
+    background: #ffff00; /* Cyber Yellow */
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0 #000;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-top: 2px dashed #000;
+    padding-top: 20px;
+}
+
+.login-footer a {
+    color: #ff00ff;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+.login-footer a:hover {
+    color: #00ffff;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 30px 20px;
+        margin: 20px;
+        border-width: 2px;
+    }
+    
+    .login-logo .logo-icon {
+        font-size: 2.5rem;
+    }
+    
+    .login-logo h1 {
+        font-size: 1.5rem;
+    }
+}

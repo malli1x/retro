@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід — RetroTech Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="modal.css">
+</head>
+<body class="login-page">
+
+<div class="login-container">
+    <header class="login-header">
+        <a href="index.html" class="login-logo">
+            <span class="logo-icon">📻</span>
+            <h1>RETROTECH HUB</h1>
+        </a>
+        <p>Авторизуйтесь, щоб отримати доступ до вашої колекції</p>
+    </header>
+
+    <form id="loginForm" class="retro-form">
+        <div class="field-group">
+            <label for="email">Електронна пошта</label>
+            <input type="email" id="email" name="email" placeholder="email@example.com" required>
+        </div>
+
+        <div class="field-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="form-options">
+            <label class="remember-me">
+                <input type="checkbox"> Запам'ятати мене
+            </label>
+            <a href="#" class="forgot-link">Забули пароль?</a>
+        </div>
+
+        <button type="submit" class="submit-btn">Увійти</button>
+    </form>
+
+    <footer class="login-footer">
+        <p>Ще не з нами? <a href="register.html">Створити акаунт</a></p>
+    </footer>
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>
