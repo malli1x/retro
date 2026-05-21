@@ -4,7 +4,7 @@ let products = [];
 // --- Завантажити товари з серверного API ---
 async function loadProducts() {
   try {
-    const response = await fetch('http://localhost/retrotech/api.php');
+    const response = await fetch('api.php');
     if (!response.ok) throw new Error('Помилка завантаження товарів');
     const data = await response.json();
 
