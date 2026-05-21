@@ -1,0 +1,20 @@
+# Ігноруємо системні файли
+.DS_Store
+Thumbs.db
+
+# Ігноруємо PHP кеш та логи
+*.log
+*.cache
+
+# IDE файли
+.vscode/
+.idea/
+
+# Node modules (якщо є)
+node_modules/
+
+# Змінні середовища (секрети)
+.env
+
+# SQL дамп (не потрібен у репозиторії)
+*.sql
