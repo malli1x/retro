@@ -189,7 +189,7 @@ nav {
 /* HERO */
 .hero {
   background: var(--cream);
-  background-image: url('sky.png');
+  background-image: url('sky.webp');
   background-size: cover;
   background-position: center;
   padding: 4rem 2rem;
