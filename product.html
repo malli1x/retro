@@ -390,7 +390,7 @@
 
       // Завантажуємо товари з API
       try {
-        const response = await fetch('http://localhost/retrotech/api.php');
+        const response = await fetch('api.php');
         if (!response.ok) throw new Error('Помилка завантаження');
         const data = await response.json();
         if (data.error) throw new Error(data.error);
