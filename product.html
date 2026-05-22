@@ -371,12 +371,15 @@
         <span id="cart-total-price">0 грн</span>
       </div>
       <!-- Кнопка оформлення замовлення -->
-      <button class="cart-checkout-btn" onclick="checkout()">Оформити замовлення</button>
+      <button class="cart-checkout-btn" onclick="openCheckoutModal(event)">Оформити замовлення</button>
       <!-- Кнопка очищення кошика -->
       <button class="cart-clear-btn" onclick="clearCart()">Очистити кошик</button>
     </div>
   </aside>
-  <script src="script.js"></script>
+
+
+
+  <script src="script.js?v=3"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const urlParams = new URLSearchParams(window.location.search);

@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RetroTech Hub — Вінтажна техніка</title>
   <!-- Підключення шрифтів -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet">
   <!-- Підключення зовнішнього CSS файлу -->
   <link rel="stylesheet" href="style.css">
 </head>
@@ -29,25 +31,25 @@
         </svg>
         <input type="text" placeholder="Пошук камери, телефону, аудіо...">
       </div>
-        <!-- Кнопка кошика в навігації -->
-        <a class="nav-action" href="#" id="cart-btn" onclick="toggleCart(event)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <path d="M16 10a4 4 0 0 1-8 0" />
-          </svg>
-          <!-- Бейдж з кількістю товарів -->
-          <div class="badge" id="cart-badge">0</div>
-          Кошик
-        </a>
+      <!-- Кнопка кошика в навігації -->
+      <a class="nav-action" href="#" id="cart-btn" onclick="toggleCart(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <!-- Бейдж з кількістю товарів -->
+        <div class="badge" id="cart-badge">0</div>
+        Кошик
+      </a>
 
-        <a class="nav-action" href="modal.html" id="account-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-          Акаунт
-        </a>
+      <a class="nav-action" href="modal.html" id="account-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        Акаунт
+      </a>
 
     </div>
     <div class="nav-links">
@@ -92,26 +94,39 @@
       <h3>Фільтри</h3>
       <div class="filter-group">
         <div class="filter-group-title">Бренд</div>
-        <div class="filter-item"><input type="checkbox" id="br-sony" data-filter="brand" data-value="Sony"><label for="br-sony">Sony</label></div>
-        <div class="filter-item"><input type="checkbox" id="br-nintendo" data-filter="brand" data-value="Nintendo"><label for="br-nintendo">Nintendo</label></div>
-        <div class="filter-item"><input type="checkbox" id="br-fuji" data-filter="brand" data-value="Fujifilm"><label for="br-fuji">Fujifilm</label></div>
-        <div class="filter-item"><input type="checkbox" id="br-canon" data-filter="brand" data-value="Canon"><label for="br-canon">Canon</label></div>
-        <div class="filter-item"><input type="checkbox" id="br-nikon" data-filter="brand" data-value="Nikon"><label for="br-nikon">Nikon</label></div>
-        <div class="filter-item"><input type="checkbox" id="br-olympus" data-filter="brand" data-value="Olympus"><label for="br-olympus">Olympus</label></div>
-        <div class="filter-item"><input type="checkbox" id="br-apple" data-filter="brand" data-value="Apple"><label for="br-apple">Apple</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-sony" data-filter="brand" data-value="Sony"><label
+            for="br-sony">Sony</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-nintendo" data-filter="brand"
+            data-value="Nintendo"><label for="br-nintendo">Nintendo</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-fuji" data-filter="brand" data-value="Fujifilm"><label
+            for="br-fuji">Fujifilm</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-canon" data-filter="brand" data-value="Canon"><label
+            for="br-canon">Canon</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-nikon" data-filter="brand" data-value="Nikon"><label
+            for="br-nikon">Nikon</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-olympus" data-filter="brand" data-value="Olympus"><label
+            for="br-olympus">Olympus</label></div>
+        <div class="filter-item"><input type="checkbox" id="br-apple" data-filter="brand" data-value="Apple"><label
+            for="br-apple">Apple</label></div>
       </div>
       <div class="filter-group">
         <div class="filter-group-title">Стан</div>
-        <div class="filter-item"><input type="checkbox" id="cond-new" data-filter="condition" data-value="Як новий"><label for="cond-new">Як новий</label></div>
-        <div class="filter-item"><input type="checkbox" id="cond-good" data-filter="condition" data-value="Добрий стан"><label for="cond-good">Добрий</label></div>
-        <div class="filter-item"><input type="checkbox" id="cond-used" data-filter="condition" data-value="Сліди використання"><label for="cond-used">Сліди використання</label>
+        <div class="filter-item"><input type="checkbox" id="cond-new" data-filter="condition"
+            data-value="Як новий"><label for="cond-new">Як новий</label></div>
+        <div class="filter-item"><input type="checkbox" id="cond-good" data-filter="condition"
+            data-value="Добрий стан"><label for="cond-good">Добрий</label></div>
+        <div class="filter-item"><input type="checkbox" id="cond-used" data-filter="condition"
+            data-value="Сліди використання"><label for="cond-used">Сліди використання</label>
         </div>
       </div>
       <div class="filter-group">
         <div class="filter-group-title">Тип техніки</div>
-        <div class="filter-item"><input type="checkbox" id="type-cam" data-filter="type" data-value="Камери"><label for="type-cam">Камери</label></div>
-        <div class="filter-item"><input type="checkbox" id="type-audio" data-filter="type" data-value="Аудіо"><label for="type-audio">Аудіо</label></div>
-        <div class="filter-item"><input type="checkbox" id="type-game" data-filter="type" data-value="Ігри"><label for="type-game">Ігри</label></div>
+        <div class="filter-item"><input type="checkbox" id="type-cam" data-filter="type" data-value="Камери"><label
+            for="type-cam">Камери</label></div>
+        <div class="filter-item"><input type="checkbox" id="type-audio" data-filter="type" data-value="Аудіо"><label
+            for="type-audio">Аудіо</label></div>
+        <div class="filter-item"><input type="checkbox" id="type-game" data-filter="type" data-value="Ігри"><label
+            for="type-game">Ігри</label></div>
       </div>
       <div class="filter-group">
         <div class="filter-group-title">Ціна</div>
@@ -207,7 +222,7 @@
         <span id="cart-total-price">0 грн</span>
       </div>
       <!-- Кнопка оформлення замовлення -->
-      <button class="cart-checkout-btn" onclick="checkout()">Оформити замовлення</button>
+      <button class="cart-checkout-btn" onclick="openCheckoutModal(event)">Оформити замовлення</button>
       <!-- Кнопка очищення кошика -->
       <button class="cart-clear-btn" onclick="clearCart()">Очистити кошик</button>
     </div>
@@ -216,96 +231,10 @@
 
 
 
-  <!-- ======== МОДАЛЬНЕ ВІКНО ОФОРМЛЕННЯ ЗАМОВЛЕННЯ ======== -->
-  <div class="checkout-overlay" id="checkout-overlay" onclick="checkoutOverlayClick(event)">
-    <div class="checkout-modal" id="checkout-modal">
-      <!-- Кнопка закриття -->
-      <button class="checkout-close" onclick="event.stopPropagation(); closeCheckoutModal()" title="Закрити">✕</button>
 
-      <!-- Заголовок -->
-      <h2>🛒 Оформлення замовлення</h2>
-
-      <!-- Сума замовлення -->
-      <div class="checkout-summary">
-        <span>Сума замовлення:</span>
-        <span id="checkout-total" class="checkout-total-value">0 грн</span>
-      </div>
-
-      <!-- Форма -->
-      <form class="checkout-form" id="checkout-form" onsubmit="submitOrder(event)">
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="order-name">Ім'я та прізвище *</label>
-            <input type="text" id="order-name" name="name" placeholder="Іван Петренко" required>
-          </div>
-          <div class="form-group">
-            <label for="order-phone">Телефон *</label>
-            <input type="tel" id="order-phone" name="phone" placeholder="+38 (0XX) XXX-XX-XX" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="order-email">Email</label>
-          <input type="email" id="order-email" name="email" placeholder="your@email.com">
-        </div>
-
-        <div class="form-group">
-          <label for="order-address">Адреса доставки *</label>
-          <input type="text" id="order-address" name="address" placeholder="м. Київ, вул. Хрещатик, 1" required>
-        </div>
-
-        <div class="form-group">
-          <label for="order-delivery">Спосіб доставки</label>
-          <div class="delivery-options">
-            <label class="delivery-option">
-              <input type="radio" name="delivery" value="nova" checked>
-              <span class="delivery-label">
-                <span class="delivery-icon">📦</span>
-                <span>Нова Пошта</span>
-              </span>
-            </label>
-            <label class="delivery-option">
-              <input type="radio" name="delivery" value="ukrposhta">
-              <span class="delivery-label">
-                <span class="delivery-icon">🏣</span>
-                <span>Укрпошта</span>
-              </span>
-            </label>
-            <label class="delivery-option">
-              <input type="radio" name="delivery" value="pickup">
-              <span class="delivery-label">
-                <span class="delivery-icon">🏪</span>
-                <span>Самовивіз</span>
-              </span>
-            </label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="order-comment">Коментар до замовлення</label>
-          <input type="text" id="order-comment" name="comment" placeholder="Додаткова інформація...">
-        </div>
-
-        <button type="submit" class="checkout-submit">
-          ✅ Підтвердити замовлення
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ======== МОДАЛЬНЕ ВІКНО УСПІШНОГО ЗАМОВЛЕННЯ ======== -->
-  <div class="checkout-overlay" id="success-overlay">
-    <div class="checkout-modal success-modal">
-      <div class="success-icon">🎉</div>
-      <h2>Замовлення прийнято!</h2>
-      <p class="success-text">Дякуємо за покупку! Наш менеджер зв'яжеться з вами найближчим часом для підтвердження замовлення.</p>
-      <button class="checkout-submit" onclick="closeSuccessModal()">Чудово!</button>
-    </div>
-  </div>
 
   <!-- Підключення зовнішнього JavaScript файлу -->
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 
 </html>

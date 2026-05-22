@@ -22,6 +22,11 @@ async function loadProducts() {
     if (grid) {
       grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#7A7265;font-size:1.1rem;">Не вдалося завантажити товари. Спробуйте пізніше.</div>';
     }
+  } finally {
+    // Після завантаження (успішного чи ні) ініціалізуємо сторінку оформлення, якщо ми на ній
+    if (typeof initCheckoutPage === 'function') {
+      initCheckoutPage();
+    }
   }
 }
 // ======== КОШИК (змінні та функції) ========
@@ -206,110 +211,108 @@ function clearCart() {
   renderCartItems();
 }
 
-// --- Відкрити модальне вікно оформлення замовлення ---
-function checkout() {
-  const overlay = document.getElementById('checkout-overlay');
-  if (!overlay) { console.error('checkout-overlay не знайдено'); return; }
-
-  // Закриваємо кошик перед відкриттям модалки
-  const sidebar = document.getElementById('cart-sidebar');
-  const cartOverlay = document.getElementById('cart-overlay');
-  if (sidebar) sidebar.classList.remove('open');
-  if (cartOverlay) cartOverlay.classList.remove('active');
-
-  // Передаємо поточну суму у модалку
-  const totalEl = document.getElementById('cart-total-price');
-  const checkoutTotal = document.getElementById('checkout-total');
-  if (totalEl && checkoutTotal) {
-    checkoutTotal.textContent = totalEl.textContent;
-  }
-
-  // Показуємо модалку
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-
-  // Скидаємо форму
-  const form = document.getElementById('checkout-form');
-  if (form) form.reset();
+// --- Перехід на сторінку оформлення замовлення ---
+function openCheckoutModal(event) {
+  if (event) event.preventDefault();
+  window.location.href = 'checkout.html';
 }
 
-// --- Закрити модальне вікно оформлення (кнопкою або Escape) ---
-function closeCheckoutModal() {
-  const overlay = document.getElementById('checkout-overlay');
-  if (overlay) overlay.classList.remove('active');
-  document.body.style.overflow = '';
+// --- Ініціалізація сторінки оформлення замовлення ---
+function initCheckoutPage() {
+  const checkoutTotalEl = document.getElementById('page-checkout-total');
+  if (!checkoutTotalEl) return; // Ми не на сторінці checkout.html
+
+  let totalPrice = 0;
+  cart.forEach(item => {
+    const product = products.find(p => p.name === item.name);
+    if (product) {
+      const price = parsePrice(product.price);
+      totalPrice += price * item.qty;
+    }
+  });
+  checkoutTotalEl.textContent = totalPrice.toLocaleString('uk-UA') + ' грн';
 }
 
-// --- Закрити при кліку на затемнений фон (поза модалкою) ---
-function checkoutOverlayClick(event) {
-  if (event.target === document.getElementById('checkout-overlay')) {
-    closeCheckoutModal();
-  }
-}
+// Ініціалізація викликається з loadProducts()
 
-// --- Закрити модалку успіху ---
-function closeSuccessModal() {
-  const overlay = document.getElementById('success-overlay');
-  if (overlay) overlay.classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-// --- Відправити замовлення ---
-function submitOrder(event) {
+// --- Відправити замовлення зі сторінки checkout.html ---
+async function submitCheckoutPage(event) {
   event.preventDefault();
 
   const name    = document.getElementById('order-name')?.value.trim();
   const phone   = document.getElementById('order-phone')?.value.trim();
-  const email   = document.getElementById('order-email')?.value.trim();
   const address = document.getElementById('order-address')?.value.trim();
-  const delivery = document.querySelector('input[name="delivery"]:checked')?.value || 'nova';
+  const email   = document.getElementById('order-email')?.value.trim();
   const comment = document.getElementById('order-comment')?.value.trim();
-
-  // Валідація
+  const delivery = document.querySelector('input[name="delivery"]:checked')?.value;
+  
   if (!name || !phone || !address) return;
 
-  // Збираємо список товарів
-  const items = cart.map(item => {
+  const btn = event.target.querySelector('button[type="submit"]');
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Відправка...';
+  }
+
+  // Підготовка даних кошика та розрахунок загальної суми
+  let cartData = [];
+  let totalPrice = 0;
+  cart.forEach(item => {
     const product = products.find(p => p.name === item.name);
-    return product ? `${item.name} x${item.qty} — ${product.price} грн` : null;
-  }).filter(Boolean).join('\n');
+    if (product) {
+      const price = parsePrice(product.price);
+      cartData.push({
+        name: product.name,
+        qty: item.qty,
+        price: price
+      });
+      totalPrice += price * item.qty;
+    }
+  });
 
-  // Логуємо замовлення (у реальному проекті тут — fetch до API)
-  console.log('=== НОВЕ ЗАМОВЛЕННЯ ===');
-  console.log('Ім\'я:', name);
-  console.log('Телефон:', phone);
-  console.log('Email:', email || '—');
-  console.log('Адреса:', address);
-  console.log('Доставка:', delivery);
-  console.log('Коментар:', comment || '—');
-  console.log('Товари:\n', items);
+  const payload = {
+    name, phone, address, email, comment, delivery,
+    cart: cartData,
+    totalPrice: totalPrice
+  };
 
-  // Закриваємо форму
-  const checkoutOverlay = document.getElementById('checkout-overlay');
-  if (checkoutOverlay) checkoutOverlay.classList.remove('active');
+  try {
+    const res = await fetch('telegram_order.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+    if (!result.success) {
+      console.error('Помилка відправки в Telegram:', result.error);
+    }
+  } catch (err) {
+    console.error('Не вдалося відправити замовлення:', err);
+  }
+
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
+
+  // Очищаємо кошик
+  clearCart();
 
   // Показуємо модалку успіху
-  const successOverlay = document.getElementById('success-overlay');
-  if (successOverlay) successOverlay.classList.add('active');
-
-  // Очищаємо кошик і закриваємо його
-  clearCart();
-  const sidebar = document.getElementById('cart-sidebar');
-  const cartOverlay = document.getElementById('cart-overlay');
-  if (sidebar) sidebar.classList.remove('open');
-  if (cartOverlay) cartOverlay.classList.remove('active');
+  const successOverlay = document.getElementById('page-success-overlay');
+  if (successOverlay) {
+    successOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
 }
+
+
 
 // Ініціалізація бейджа при завантаженні сторінки
 updateBadge();
 
-// Закриття модалки по клавіші Escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeCheckoutModal();
-    closeSuccessModal();
-  }
-});
+
 
 
 // ======== ФІЛЬТРИ КАТАЛОГУ ========

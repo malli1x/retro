@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оформлення замовлення — RetroTech Hub</title>
+  <!-- Підключення шрифтів -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet">
+  <!-- Підключення зовнішнього CSS файлу -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .checkout-page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 1rem;
+      min-height: calc(100vh - 200px);
+    }
+    
+    .checkout-container {
+      background: var(--warm-white);
+      border: 2px solid var(--dark);
+      box-shadow: 6px 6px 0px var(--dark);
+      width: 100%;
+      max-width: 600px;
+      padding: 2.5rem;
+    }
+
+    .checkout-container h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1rem;
+      color: var(--dark);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- НАВІГАЦІЯ -->
+  <nav>
+    <div class="nav-top">
+      <a class="logo" href="index.html">
+        <div class="logo-icon">📻</div>
+        <div>RETROTECH<br>HUB</div>
+      </a>
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"
+          style="color:#7A7265;flex-shrink:0">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="text" placeholder="Пошук камери, телефону, аудіо...">
+      </div>
+      <!-- Кнопка кошика в навігації (веде назад на головну) -->
+      <a class="nav-action" href="index.html" id="cart-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <div class="badge" id="cart-badge">0</div>
+        Кошик
+      </a>
+
+      <a class="nav-action" href="modal.html" id="account-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        Акаунт
+      </a>
+
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Каталог</a>
+      <a href="pronas.html">Про нас</a>
+      <a href="contact.html">Контакти</a>
+    </div>
+  </nav>
+
+  <!-- ОФОРМЛЕННЯ ЗАМОВЛЕННЯ -->
+  <main class="checkout-page-wrapper">
+    <div class="checkout-container">
+      <h1>🛒 Оформлення замовлення</h1>
+
+      <div class="checkout-summary">
+        <span>Сума замовлення:</span>
+        <span id="page-checkout-total" class="checkout-total-value">0 грн</span>
+      </div>
+
+      <!-- Форма -->
+      <form class="checkout-form" id="page-checkout-form" onsubmit="submitCheckoutPage(event)">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="order-name">Ім'я та прізвище *</label>
+            <input type="text" id="order-name" name="name" placeholder="Іван Петренко" required>
+          </div>
+          <div class="form-group">
+            <label for="order-phone">Телефон *</label>
+            <input type="tel" id="order-phone" name="phone" placeholder="+38 (0XX) XXX-XX-XX" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="order-email">Email</label>
+          <input type="email" id="order-email" name="email" placeholder="your@email.com">
+        </div>
+
+        <div class="form-group">
+          <label for="order-address">Адреса доставки *</label>
+          <input type="text" id="order-address" name="address" placeholder="м. Київ, вул. Хрещатик, 1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="order-delivery">Спосіб доставки</label>
+          <div class="delivery-options">
+            <label class="delivery-option">
+              <input type="radio" name="delivery" value="nova" checked>
+              <span class="delivery-label">
+                <span class="delivery-icon">📦</span>
+                <span>Нова Пошта</span>
+              </span>
+            </label>
+            <label class="delivery-option">
+              <input type="radio" name="delivery" value="ukrposhta">
+              <span class="delivery-label">
+                <span class="delivery-icon">🏣</span>
+                <span>Укрпошта</span>
+              </span>
+            </label>
+            <label class="delivery-option">
+              <input type="radio" name="delivery" value="pickup">
+              <span class="delivery-label">
+                <span class="delivery-icon">🏪</span>
+                <span>Самовивіз</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="order-comment">Коментар до замовлення</label>
+          <input type="text" id="order-comment" name="comment" placeholder="Додаткова інформація...">
+        </div>
+
+        <button type="submit" class="checkout-submit">
+          ✅ Підтвердити замовлення
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- МОДАЛЬНЕ ВІКНО УСПІХУ (ТІЛЬКИ ДЛЯ ЦІЄЇ СТОРІНКИ) -->
+  <div class="checkout-overlay" id="page-success-overlay">
+    <div class="checkout-modal success-modal">
+      <div class="success-icon">🎉</div>
+      <h2>Замовлення прийнято!</h2>
+      <p class="success-text">Дякуємо за покупку! Наш менеджер зв'яжеться з вами найближчим часом для підтвердження
+        замовлення.</p>
+      <button class="checkout-submit" onclick="window.location.href='index.html'">Повернутися до каталогу</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Про нас</h4>
+        <a href="#">Про нас</a>
+        <a href="#">Ретретована техніка</a>
+        <a href="#">Текі тахти</a>
+      </div>
+      <div class="footer-col">
+        <h4>Клієнтам</h4>
+        <a href="#">Повернення</a>
+        <a href="#">Часті питання</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <a href="#">Email</a>
+        <a href="#">Телефон</a>
+        <a href="#">Соціомережі</a>
+        <div class="social-links">
+          <a class="social-link" href="#">f</a>
+          <a class="social-link" href="#">in</a>
+          <a class="social-link" href="#">tg</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Підписка</h4>
+        <div class="footer-subscribe">
+          <input type="email" placeholder="Email">
+          <button>Підписатися</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © RetroTech Hub 2026
+    </div>
+  </footer>
+
+  <script src="script.js?v=4"></script>
+</body>
+
+</html>
