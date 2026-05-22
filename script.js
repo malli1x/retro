@@ -209,7 +209,13 @@ function clearCart() {
 // --- Відкрити модальне вікно оформлення замовлення ---
 function checkout() {
   const overlay = document.getElementById('checkout-overlay');
-  if (!overlay) return;
+  if (!overlay) { console.error('checkout-overlay не знайдено'); return; }
+
+  // Закриваємо кошик перед відкриттям модалки
+  const sidebar = document.getElementById('cart-sidebar');
+  const cartOverlay = document.getElementById('cart-overlay');
+  if (sidebar) sidebar.classList.remove('open');
+  if (cartOverlay) cartOverlay.classList.remove('active');
 
   // Передаємо поточну суму у модалку
   const totalEl = document.getElementById('cart-total-price');
@@ -218,6 +224,7 @@ function checkout() {
     checkoutTotal.textContent = totalEl.textContent;
   }
 
+  // Показуємо модалку
   overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 
