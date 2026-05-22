@@ -216,6 +216,94 @@
 
 
 
+  <!-- ======== МОДАЛЬНЕ ВІКНО ОФОРМЛЕННЯ ЗАМОВЛЕННЯ ======== -->
+  <div class="checkout-overlay" id="checkout-overlay" onclick="checkoutOverlayClick(event)">
+    <div class="checkout-modal" id="checkout-modal">
+      <!-- Кнопка закриття -->
+      <button class="checkout-close" onclick="event.stopPropagation(); closeCheckoutModal()" title="Закрити">✕</button>
+
+      <!-- Заголовок -->
+      <h2>🛒 Оформлення замовлення</h2>
+
+      <!-- Сума замовлення -->
+      <div class="checkout-summary">
+        <span>Сума замовлення:</span>
+        <span id="checkout-total" class="checkout-total-value">0 грн</span>
+      </div>
+
+      <!-- Форма -->
+      <form class="checkout-form" id="checkout-form" onsubmit="submitOrder(event)">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="order-name">Ім'я та прізвище *</label>
+            <input type="text" id="order-name" name="name" placeholder="Іван Петренко" required>
+          </div>
+          <div class="form-group">
+            <label for="order-phone">Телефон *</label>
+            <input type="tel" id="order-phone" name="phone" placeholder="+38 (0XX) XXX-XX-XX" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="order-email">Email</label>
+          <input type="email" id="order-email" name="email" placeholder="your@email.com">
+        </div>
+
+        <div class="form-group">
+          <label for="order-address">Адреса доставки *</label>
+          <input type="text" id="order-address" name="address" placeholder="м. Київ, вул. Хрещатик, 1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="order-delivery">Спосіб доставки</label>
+          <div class="delivery-options">
+            <label class="delivery-option">
+              <input type="radio" name="delivery" value="nova" checked>
+              <span class="delivery-label">
+                <span class="delivery-icon">📦</span>
+                <span>Нова Пошта</span>
+              </span>
+            </label>
+            <label class="delivery-option">
+              <input type="radio" name="delivery" value="ukrposhta">
+              <span class="delivery-label">
+                <span class="delivery-icon">🏣</span>
+                <span>Укрпошта</span>
+              </span>
+            </label>
+            <label class="delivery-option">
+              <input type="radio" name="delivery" value="pickup">
+              <span class="delivery-label">
+                <span class="delivery-icon">🏪</span>
+                <span>Самовивіз</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="order-comment">Коментар до замовлення</label>
+          <input type="text" id="order-comment" name="comment" placeholder="Додаткова інформація...">
+        </div>
+
+        <button type="submit" class="checkout-submit">
+          ✅ Підтвердити замовлення
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======== МОДАЛЬНЕ ВІКНО УСПІШНОГО ЗАМОВЛЕННЯ ======== -->
+  <div class="checkout-overlay" id="success-overlay">
+    <div class="checkout-modal success-modal">
+      <div class="success-icon">🎉</div>
+      <h2>Замовлення прийнято!</h2>
+      <p class="success-text">Дякуємо за покупку! Наш менеджер зв'яжеться з вами найближчим часом для підтвердження замовлення.</p>
+      <button class="checkout-submit" onclick="closeSuccessModal()">Чудово!</button>
+    </div>
+  </div>
+
   <!-- Підключення зовнішнього JavaScript файлу -->
   <script src="script.js"></script>
 </body>

@@ -206,15 +206,104 @@ function clearCart() {
   renderCartItems();
 }
 
-// --- Оформити замовлення (заглушка) ---
+// --- Відкрити модальне вікно оформлення замовлення ---
 function checkout() {
-  alert('Дякуємо за замовлення! Ми зв\'яжемося з вами найближчим часом.');
+  const overlay = document.getElementById('checkout-overlay');
+  if (!overlay) return;
+
+  // Передаємо поточну суму у модалку
+  const totalEl = document.getElementById('cart-total-price');
+  const checkoutTotal = document.getElementById('checkout-total');
+  if (totalEl && checkoutTotal) {
+    checkoutTotal.textContent = totalEl.textContent;
+  }
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  // Скидаємо форму
+  const form = document.getElementById('checkout-form');
+  if (form) form.reset();
+}
+
+// --- Закрити модальне вікно оформлення (кнопкою або Escape) ---
+function closeCheckoutModal() {
+  const overlay = document.getElementById('checkout-overlay');
+  if (overlay) overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// --- Закрити при кліку на затемнений фон (поза модалкою) ---
+function checkoutOverlayClick(event) {
+  if (event.target === document.getElementById('checkout-overlay')) {
+    closeCheckoutModal();
+  }
+}
+
+// --- Закрити модалку успіху ---
+function closeSuccessModal() {
+  const overlay = document.getElementById('success-overlay');
+  if (overlay) overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// --- Відправити замовлення ---
+function submitOrder(event) {
+  event.preventDefault();
+
+  const name    = document.getElementById('order-name')?.value.trim();
+  const phone   = document.getElementById('order-phone')?.value.trim();
+  const email   = document.getElementById('order-email')?.value.trim();
+  const address = document.getElementById('order-address')?.value.trim();
+  const delivery = document.querySelector('input[name="delivery"]:checked')?.value || 'nova';
+  const comment = document.getElementById('order-comment')?.value.trim();
+
+  // Валідація
+  if (!name || !phone || !address) return;
+
+  // Збираємо список товарів
+  const items = cart.map(item => {
+    const product = products.find(p => p.name === item.name);
+    return product ? `${item.name} x${item.qty} — ${product.price} грн` : null;
+  }).filter(Boolean).join('\n');
+
+  // Логуємо замовлення (у реальному проекті тут — fetch до API)
+  console.log('=== НОВЕ ЗАМОВЛЕННЯ ===');
+  console.log('Ім\'я:', name);
+  console.log('Телефон:', phone);
+  console.log('Email:', email || '—');
+  console.log('Адреса:', address);
+  console.log('Доставка:', delivery);
+  console.log('Коментар:', comment || '—');
+  console.log('Товари:\n', items);
+
+  // Закриваємо форму
+  const checkoutOverlay = document.getElementById('checkout-overlay');
+  if (checkoutOverlay) checkoutOverlay.classList.remove('active');
+
+  // Показуємо модалку успіху
+  const successOverlay = document.getElementById('success-overlay');
+  if (successOverlay) successOverlay.classList.add('active');
+
+  // Очищаємо кошик і закриваємо його
   clearCart();
-  toggleCart();
+  const sidebar = document.getElementById('cart-sidebar');
+  const cartOverlay = document.getElementById('cart-overlay');
+  if (sidebar) sidebar.classList.remove('open');
+  if (cartOverlay) cartOverlay.classList.remove('active');
 }
 
 // Ініціалізація бейджа при завантаженні сторінки
 updateBadge();
+
+// Закриття модалки по клавіші Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCheckoutModal();
+    closeSuccessModal();
+  }
+});
+
 
 // ======== ФІЛЬТРИ КАТАЛОГУ ========
 
