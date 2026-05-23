@@ -56,30 +56,10 @@ $text .= "\n💰 <b>Загальна сума:</b> $totalPrice грн";
 
 // Відправляємо запит до Telegram API
 $url = "https://api.telegram.org/bot" . $botToken . "/sendMessage";
-// Створюємо кнопки (Inline Keyboard)
-$keyboard = [
-    'inline_keyboard' => [
-        [
-            // Telegram API не підтримує посилання tel: у кнопках, 
-            // тому найкраща альтернатива — це посилання на WhatsApp або Viber
-            [
-                'text' => '💬 Написати у WhatsApp', 
-                'url' => 'https://wa.me/' . preg_replace('/[^0-9]/', '', $phone)
-            ],
-            // Кнопка для переходу на ваш сайт (Telegram не приймає слово localhost)
-            [
-                'text' => '🌐 Відкрити сайт', 
-                'url' => 'https://retroboberd.onrender.com/index.html'
-            ]
-        ]
-    ]
-];
-
 $postData = [
     'chat_id' => $chatId,
     'text' => $text,
-    'parse_mode' => 'HTML',
-    'reply_markup' => json_encode($keyboard) // Додаємо кнопки до повідомлення
+    'parse_mode' => 'HTML'
 ];
 
 $ch = curl_init($url);
