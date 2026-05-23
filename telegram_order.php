@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 // ==========================================
 // ВКАЖІТЬ ТУТ ВАШІ ДАНІ ВІД TELEGRAM БОТА
 // ==========================================
-$botToken = "7999361571:AAGvQng34iJlal4FXx6mHJZq1OGSmrQaVpI";
+$botToken = "7999361571:AAH7E_QVUzGCVcRjsPjaO7eDhZ9T3tLqy50";
 $chatId = "738131599";
 // ==========================================
 
