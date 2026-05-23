@@ -331,15 +331,6 @@ function highlightMatch(text, query) {
   return text.replace(regex, '<mark>$1</mark>');
 }
 
-// --- Розрахувати позицію dropdown під полем пошуку ---
-function positionDropdown() {
-  if (!searchInput || !searchDropdown) return;
-  const rect = searchInput.closest('.search-wrapper').getBoundingClientRect();
-  searchDropdown.style.top    = (rect.bottom + 4) + 'px';
-  searchDropdown.style.left   = rect.left + 'px';
-  searchDropdown.style.width  = rect.width + 'px';
-}
-
 // --- Показати/сховати dropdown ---
 function showSearchDropdown(query) {
   if (!searchDropdown) return;
@@ -359,7 +350,6 @@ function showSearchDropdown(query) {
 
   if (matches.length === 0) {
     searchDropdown.innerHTML = `<div class="search-dropdown-empty">🔍 Нічого не знайдено за «${query}»</div>`;
-    positionDropdown();
     searchDropdown.classList.add('active');
     return;
   }
@@ -383,7 +373,6 @@ function showSearchDropdown(query) {
   }).join('');
 
   searchDropdown.innerHTML = header + items;
-  positionDropdown();
   searchDropdown.classList.add('active');
 }
 
