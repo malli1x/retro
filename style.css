@@ -43,6 +43,7 @@ nav {
   position: sticky;
   top: 0;
   z-index: 100;
+  overflow: visible;
 }
 
 .nav-top {
@@ -125,14 +126,11 @@ nav {
 }
 
 .search-dropdown {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
+  position: fixed;
   background: var(--warm-white);
   border: 2px solid var(--border);
   box-shadow: 4px 4px 0 var(--border);
-  z-index: 999;
+  z-index: 9999;
   max-height: 360px;
   overflow-y: auto;
   display: none;
