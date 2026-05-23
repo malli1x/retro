@@ -56,10 +56,29 @@ $text .= "\n💰 <b>Загальна сума:</b> $totalPrice грн";
 
 // Відправляємо запит до Telegram API
 $url = "https://api.telegram.org/bot" . $botToken . "/sendMessage";
+// Створюємо кнопки (Inline Keyboard)
+$keyboard = [
+    'inline_keyboard' => [
+        [
+            // Кнопка для дзвінка клієнту (працює на смартфонах)
+            [
+                'text' => '📞 Зателефонувати', 
+                'url' => 'tel:' . preg_replace('/[^0-9\+]/', '', $phone)
+            ],
+            // Кнопка для переходу на ваш сайт (як приклад)
+            [
+                'text' => '🌐 Відкрити сайт', 
+                'url' => 'https://ваш-сайт.com'
+            ]
+        ]
+    ]
+];
+
 $postData = [
     'chat_id' => $chatId,
     'text' => $text,
-    'parse_mode' => 'HTML'
+    'parse_mode' => 'HTML',
+    'reply_markup' => json_encode($keyboard) // Додаємо кнопки до повідомлення
 ];
 
 $ch = curl_init($url);
