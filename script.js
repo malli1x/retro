@@ -322,12 +322,116 @@ let searchQuery = '';
 
 // Додаємо обробник для поля пошуку, якщо воно існує
 const searchInput = document.querySelector('.search-bar input');
+const searchDropdown = document.getElementById('search-dropdown');
+
+// --- Підсвітити збіг у рядку ---
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
+// --- Показати/сховати dropdown ---
+function showSearchDropdown(query) {
+  if (!searchDropdown) return;
+
+  if (!query || query.length < 1) {
+    searchDropdown.classList.remove('active');
+    searchDropdown.innerHTML = '';
+    return;
+  }
+
+  const q = query.toLowerCase().trim();
+  const matches = products.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    p.brand.toLowerCase().includes(q) ||
+    (p.type && p.type.toLowerCase().includes(q))
+  ).slice(0, 8); // максимум 8 підказок
+
+  if (matches.length === 0) {
+    searchDropdown.innerHTML = `<div class="search-dropdown-empty">🔍 Нічого не знайдено за «${query}»</div>`;
+    searchDropdown.classList.add('active');
+    return;
+  }
+
+  const header = `<div class="search-dropdown-header">Знайдено ${matches.length} товар${matches.length === 1 ? '' : matches.length < 5 ? 'и' : 'ів'}</div>`;
+  const items = matches.map(p => {
+    const thumb = p.image
+      ? `<div class="search-dropdown-thumb"><img src="${p.image}" alt="${p.name}"></div>`
+      : `<div class="search-dropdown-thumb">${p.emoji || '📦'}</div>`;
+    const name = highlightMatch(p.name, query);
+    return `
+      <div class="search-dropdown-item" onclick="selectSearchItem('${encodeURIComponent(p.name)}')">
+        ${thumb}
+        <div class="search-dropdown-info">
+          <div class="search-dropdown-name">${name}</div>
+          <div class="search-dropdown-meta">${p.brand || ''} · ${p.condition || ''}</div>
+        </div>
+        <div class="search-dropdown-price">${p.price} грн</div>
+      </div>
+    `;
+  }).join('');
+
+  searchDropdown.innerHTML = header + items;
+  searchDropdown.classList.add('active');
+}
+
+// --- Перейти до товару при виборі ---
+function selectSearchItem(encodedName) {
+  const name = decodeURIComponent(encodedName);
+  if (searchInput) searchInput.value = name;
+  if (searchDropdown) {
+    searchDropdown.classList.remove('active');
+    searchDropdown.innerHTML = '';
+  }
+  window.location.href = `product.html?name=${encodedName}`;
+}
+
+// --- Закрити dropdown при кліку поза ---
+document.addEventListener('click', (e) => {
+  const wrapper = document.querySelector('.search-wrapper');
+  if (wrapper && !wrapper.contains(e.target)) {
+    if (searchDropdown) {
+      searchDropdown.classList.remove('active');
+    }
+  }
+});
+
 if (searchInput) {
   searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value.toLowerCase().trim();
     applyFilters();
+    showSearchDropdown(e.target.value.trim());
+  });
+
+  // Закрити при натисканні Escape
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (searchDropdown) {
+        searchDropdown.classList.remove('active');
+        searchDropdown.innerHTML = '';
+      }
+      searchInput.blur();
+    }
+    // Enter — застосовує пошук і закриває dropdown
+    if (e.key === 'Enter') {
+      if (searchDropdown) {
+        searchDropdown.classList.remove('active');
+      }
+      // Прокрутка до каталогу
+      const catalog = document.getElementById('catalog');
+      if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  // Відкрити dropdown при фокусі, якщо є текст
+  searchInput.addEventListener('focus', (e) => {
+    if (e.target.value.trim().length > 0) {
+      showSearchDropdown(e.target.value.trim());
+    }
   });
 }
+
 
 // --- Отримати обрані значення чекбоксів певної групи ---
 function getSelectedValues(filterName) {
