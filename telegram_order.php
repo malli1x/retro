@@ -60,15 +60,16 @@ $url = "https://api.telegram.org/bot" . $botToken . "/sendMessage";
 $keyboard = [
     'inline_keyboard' => [
         [
-            // Кнопка для дзвінка клієнту (працює на смартфонах)
+            // Telegram API не підтримує посилання tel: у кнопках, 
+            // тому найкраща альтернатива — це посилання на WhatsApp або Viber
             [
-                'text' => '📞 Зателефонувати', 
-                'url' => 'tel:' . preg_replace('/[^0-9\+]/', '', $phone)
+                'text' => '💬 Написати у WhatsApp', 
+                'url' => 'https://wa.me/' . preg_replace('/[^0-9]/', '', $phone)
             ],
-            // Кнопка для переходу на ваш сайт (як приклад)
+            // Кнопка для переходу на ваш сайт (Telegram не приймає слово localhost)
             [
                 'text' => '🌐 Відкрити сайт', 
-                'url' => 'https://ваш-сайт.com'
+                'url' => 'https://retroboberd.onrender.com/index.html'
             ]
         ]
     ]
