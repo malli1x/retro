@@ -119,8 +119,8 @@ foreach ($orders as $order) {
 
             <!-- Картка: GIF -->
             <div class="acc-card acc-card-wide">
-                <div class="acc-card-body" style="display:flex; justify-content:center; align-items:center; padding: 1rem;">
-                    <img src="cheer.gif" alt="Cheer!" style="max-width:100%; border: 2px solid var(--dark); display:block;">
+                <div class="acc-card-body" style="display:flex; justify-content:center; align-items:center; padding: 1rem; overflow:hidden; max-height: 300px;">
+                    <img src="cheer.gif" alt="Cheer!" style="max-width:100%; max-height:280px; object-fit:contain; border: 2px solid var(--dark); display:block;">
                 </div>
             </div>
 
@@ -145,11 +145,11 @@ foreach ($orders as $order) {
                                 <div class="acc-order-products">
                                     <?php foreach ($order['items'] as $item): ?>
                                         <div class="acc-order-product">
-                                            <div class="acc-product-img">
+                                            <div class="acc-product-img" style="width:70px;height:70px;flex-shrink:0;overflow:hidden;border:2px solid #000;background:#f5f0e8;display:flex;align-items:center;justify-content:center;">
                                                 <?php if (!empty($item['image_url'])): ?>
-                                                    <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
+                                                    <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['name']) ?>" style="width:100%;height:100%;object-fit:contain;display:block;">
                                                 <?php else: ?>
-                                                    <span><?= htmlspecialchars($item['emoji']) ?></span>
+                                                    <span style="font-size:1.5rem;"><?= htmlspecialchars($item['emoji']) ?></span>
                                                 <?php endif; ?>
                                             </div>
                                             <div class="acc-product-details">
