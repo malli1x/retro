@@ -933,10 +933,15 @@ footer {
     gap: 1rem;
     padding: 1rem 0;
   }
-  
-  .search-bar {
+
+  .search-wrapper {
     order: 3;
-    min-width: 100%;
+    width: 100%;
+    flex: 1 0 100%;
+  }
+
+  .nav-actions {
+    margin-left: auto;
   }
 
   .nav-links {
