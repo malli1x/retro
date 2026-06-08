@@ -49,6 +49,7 @@ nav {
 .nav-top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1.5rem;
   padding: 0.75rem 0;
   border-bottom: 2px solid var(--border);
@@ -116,8 +117,10 @@ nav {
 
 /* SEARCH WRAPPER & DROPDOWN */
 .search-wrapper {
-  flex: 1;
+  flex: 0 1 500px;
+  width: 100%;
   position: relative;
+  margin: 0 auto;
 }
 
 .search-wrapper .search-bar {
@@ -253,6 +256,7 @@ nav {
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .nav-action {
