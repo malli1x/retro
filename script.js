@@ -241,12 +241,14 @@ async function submitCheckoutPage(event) {
 
   const name    = document.getElementById('order-name')?.value.trim();
   const phone   = document.getElementById('order-phone')?.value.trim();
-  const address = document.getElementById('order-address')?.value.trim();
+  const city    = document.getElementById('order-city')?.value.trim();
+  const branch  = document.getElementById('order-branch')?.value.trim();
+  const address = city && branch ? `${city}, відділення ${branch}` : (city || branch || '');
   const email   = document.getElementById('order-email')?.value.trim();
   const comment = document.getElementById('order-comment')?.value.trim();
   const delivery = document.querySelector('input[name="delivery"]:checked')?.value;
   
-  if (!name || !phone || !address) return;
+  if (!name || !phone || !city || !branch) return;
 
   const btn = event.target.querySelector('button[type="submit"]');
   const originalText = btn ? btn.innerHTML : '';
