@@ -260,13 +260,16 @@
         <div class="logo-icon">📻</div>
         <div>RETROTECH<br>HUB</div>
       </a>
-      <div class="search-bar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"
-          style="color:#7A7265;flex-shrink:0">
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
-        <input type="text" placeholder="Пошук камери, телефону, аудіо...">
+      <div class="search-wrapper">
+        <div class="search-bar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"
+            style="color:#7A7265;flex-shrink:0">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input type="text" id="search-input" placeholder="Пошук камери, телефону, аудіо..." autocomplete="off">
+        </div>
+        <div class="search-dropdown" id="search-dropdown"></div>
       </div>
       <!-- Кнопка кошика в навігації -->
       <a class="nav-action" href="#" id="cart-btn" onclick="toggleCart(event)">
@@ -280,7 +283,7 @@
         Кошик
       </a>
 
-      <a class="nav-action" href="modal.html">
+      <a class="nav-action" href="modal.html" id="account-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
           <circle cx="12" cy="7" r="4" />
