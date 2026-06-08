@@ -397,6 +397,142 @@ body.account-page {
     border-top: 2px solid var(--dark);
 }
 
+/* ── ORDERS HISTORY ────────────────────────────────── */
+.acc-orders-card {
+    margin-top: 2rem;
+}
+
+.acc-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.acc-order-item {
+    border: 2px solid var(--dark);
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.acc-order-item:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow);
+}
+
+.acc-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 2px solid var(--dark);
+    background: var(--cream);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.acc-order-id {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--dark);
+}
+
+.acc-order-date {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.acc-order-status {
+    padding: 0.2rem 0.6rem;
+    border: 2px solid var(--dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--yellow);
+}
+
+.acc-order-status.status-нове { background: var(--cyan); }
+.acc-order-status.status-в-обробці { background: var(--yellow); }
+.acc-order-status.status-відправлено { background: var(--pink-light); }
+.acc-order-status.status-виконано { background: #00ff00; }
+
+.acc-order-products {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.acc-order-product {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #ccc;
+}
+
+.acc-order-product:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.acc-product-img {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--dark);
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.acc-product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.acc-product-details {
+    flex: 1;
+}
+
+.acc-product-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+    color: var(--dark);
+}
+
+.acc-product-meta {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.acc-order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: 2px solid var(--dark);
+    background: var(--cream);
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.acc-order-total {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--pink);
+}
+
 /* ── RESPONSIVE ──────────────────────────────────── */
 @media (max-width: 640px) {
     .acc-cards {

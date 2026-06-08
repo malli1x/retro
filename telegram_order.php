@@ -1,5 +1,8 @@
 <?php
+session_start();
 header('Content-Type: application/json');
+require_once 'database.php';
+
 
 // ==========================================
 // ВКАЖІТЬ ТУТ ВАШІ ДАНІ ВІД TELEGRAM БОТА
@@ -68,7 +71,7 @@ $keyboard = [
             // Кнопка для переходу на ваш сайт
             [
                 'text' => '🌐 Відкрити сайт', 
-                'url' => 'http://127.0.0.1/retrotech'
+                'url' => 'https://retroboberd.onrender.com/index.html'
             ]
         ]
     ]
@@ -90,6 +93,39 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($httpCode == 200) {
+    // Зберігаємо замовлення в БД, якщо користувач авторизований
+    if (isset($_SESSION['user_id'])) {
+        try {
+            $userId = $_SESSION['user_id'];
+            
+            // 1. Створюємо запис у таблиці orders
+            $stmt = $pdo->prepare("INSERT INTO orders (user_id, total_amount, status) VALUES (?, ?, 'Нове')");
+            $stmt->execute([$userId, $totalPrice]);
+            $orderId = $pdo->lastInsertId();
+
+            // 2. Додаємо товари в order_items
+            foreach ($cart as $item) {
+                $itemName = $item['name'] ?? '';
+                $itemQty = $item['qty'] ?? 1;
+                $itemPrice = $item['price'] ?? 0;
+
+                // Шукаємо product_id за назвою
+                $stmtProd = $pdo->prepare("SELECT id FROM products WHERE name = ? LIMIT 1");
+                $stmtProd->execute([$itemName]);
+                $product = $stmtProd->fetch();
+
+                if ($product) {
+                    $productId = $product['id'];
+                    $stmtItem = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, price_at_purchase) VALUES (?, ?, ?, ?)");
+                    $stmtItem->execute([$orderId, $productId, $itemQty, $itemPrice]);
+                }
+            }
+        } catch (PDOException $e) {
+            // Логуємо помилку або ігноруємо, щоб не ламати відповідь клієнту
+            // error_log("DB Error: " . $e->getMessage());
+        }
+    }
+
     echo json_encode(['success' => true]);
 } else {
     echo json_encode(['success' => false, 'error' => "Telegram API Error: " . $response]);

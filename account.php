@@ -13,6 +13,26 @@ $userId    = (int) $_SESSION['user_id'];
 
 // Отримуємо першу літеру email для аватара
 $avatarLetter = strtoupper(substr($userEmail, 0, 1));
+
+// Підключаємо БД і отримуємо історію замовлень
+require_once 'database.php';
+
+$stmt = $pdo->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC");
+$stmt->execute([$userId]);
+$orders = $stmt->fetchAll();
+
+$orderHistory = [];
+foreach ($orders as $order) {
+    $stmtItems = $pdo->prepare("
+        SELECT oi.quantity, oi.price_at_purchase, p.name, p.image_url, p.emoji 
+        FROM order_items oi 
+        JOIN products p ON oi.product_id = p.id 
+        WHERE oi.order_id = ?
+    ");
+    $stmtItems->execute([$order['id']]);
+    $order['items'] = $stmtItems->fetchAll();
+    $orderHistory[] = $order;
+}
 ?>
 <!DOCTYPE html>
 <html lang="uk">
@@ -126,6 +146,53 @@ $avatarLetter = strtoupper(substr($userEmail, 0, 1));
             </div>
 
         </div>
+
+        <!-- ІСТОРІЯ ЗАМОВЛЕНЬ -->
+        <div class="acc-card acc-card-wide acc-orders-card" style="margin-top: 2rem;">
+            <div class="acc-card-header">
+                <span class="acc-card-icon">📦</span>
+                <h2>Історія замовлень</h2>
+            </div>
+            <div class="acc-card-body">
+                <?php if (empty($orderHistory)): ?>
+                    <p class="acc-about-text" style="text-align: center; color: #7A7265;">Ви ще не робили замовлень.</p>
+                <?php else: ?>
+                    <div class="acc-orders-list">
+                        <?php foreach ($orderHistory as $order): ?>
+                            <div class="acc-order-item">
+                                <div class="acc-order-header">
+                                    <span class="acc-order-id">Замовлення #<?= $order['id'] ?></span>
+                                    <span class="acc-order-date"><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></span>
+                                    <span class="acc-order-status status-<?= strtolower(str_replace(' ', '-', $order['status'])) ?>"><?= htmlspecialchars($order['status']) ?></span>
+                                </div>
+                                <div class="acc-order-products">
+                                    <?php foreach ($order['items'] as $item): ?>
+                                        <div class="acc-order-product">
+                                            <div class="acc-product-img">
+                                                <?php if (!empty($item['image_url'])): ?>
+                                                    <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
+                                                <?php else: ?>
+                                                    <span><?= htmlspecialchars($item['emoji']) ?></span>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="acc-product-details">
+                                                <div class="acc-product-name"><?= htmlspecialchars($item['name']) ?></div>
+                                                <div class="acc-product-meta"><?= $item['quantity'] ?> шт. × <?= number_format($item['price_at_purchase'], 0, '.', ' ') ?> грн</div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="acc-order-footer">
+                                    <span>Загальна сума:</span>
+                                    <span class="acc-order-total"><?= number_format($order['total_amount'], 0, '.', ' ') ?> грн</span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
     </main>
 
     <!-- FOOTER -->
