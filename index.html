@@ -70,7 +70,7 @@
     <div class="hero-content">
       <h1>ЗНАЙДИ СВІЙ<br><span>ІДЕАЛЬНИЙ ВІНТАЖ</span></h1>
       <p>Ексклюзивна ретро-техніка та перевірені часом гаджети</p>
-      <a href="#catalog" class="hero-btn">Перейти до каталогу</a>
+      <a href="#catalog" class="hero-btn" onclick="event.preventDefault(); smoothScrollTo('catalog')">Перейти до каталогу</a>
     </div>
   </section>
 
@@ -78,15 +78,15 @@
   <section class="section">
     <h2 class="section-title">Популярні категорії</h2>
     <div class="categories">
-      <a class="cat-card" href="#catalog" onclick="filterBy('Камери')">
+      <a class="cat-card" href="#catalog" onclick="filterBy('Камери', event)">
         <div class="cat-icon-wrap">📷</div>
         <span class="cat-label">Компактні камери</span>
       </a>
-      <a class="cat-card" href="#catalog" onclick="filterBy('Аудіо')">
+      <a class="cat-card" href="#catalog" onclick="filterBy('Аудіо', event)">
         <div class="cat-icon-wrap">🎧</div>
         <span class="cat-label">Аудіотехніка</span>
       </a>
-      <a class="cat-card" href="#catalog" onclick="filterBy('Ігри')">
+      <a class="cat-card" href="#catalog" onclick="filterBy('Ігри', event)">
         <div class="cat-icon-wrap">🕹️</div>
         <span class="cat-label">Ігрові консолі</span>
       </a>

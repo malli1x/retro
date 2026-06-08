@@ -538,11 +538,20 @@ function renderProducts(filter) {
   applyFilters();
 }
 
+// --- Плавна прокрутка до елемента ---
+function smoothScrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 16;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
 // --- Фільтрація при кліку на категорію ---
-function filterBy(type) {
+function filterBy(type, event) {
+  if (event) event.preventDefault();
   currentFilter = type;
   renderProducts(type);
-  document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+  smoothScrollTo('catalog');
 }
 
 
