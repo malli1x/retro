@@ -200,6 +200,112 @@ body.account-page {
     padding: 0 2rem;
 }
 
+.acc-cards-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ── LAYOUT (SIDEBAR & CONTENT) ──────────────────── */
+.acc-layout {
+    display: flex;
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.acc-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.acc-sidebar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--pink);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+}
+
+.acc-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.acc-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.2rem;
+    background: transparent;
+    border: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--pink-light);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.acc-tab-icon {
+    font-size: 1.2rem;
+}
+
+.acc-tab:hover {
+    background: rgba(255, 102, 255, 0.1);
+}
+
+.acc-tab.active {
+    background: rgba(255, 102, 255, 0.15);
+    color: var(--pink);
+    font-weight: 700;
+}
+
+.acc-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.acc-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.acc-tab-content.active {
+    display: block;
+}
+
+.acc-tab-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark);
+    text-transform: lowercase;
+    margin-bottom: 2rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.acc-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 2.5rem auto 0;
+    padding: 0 2rem;
+}
+
 .acc-card {
     background: var(--white);
     border: 2px solid var(--dark);
@@ -534,6 +640,16 @@ body.account-page {
 }
 
 /* ── RESPONSIVE ──────────────────────────────────── */
+@media (max-width: 768px) {
+    .acc-layout {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    .acc-sidebar {
+        width: 100%;
+    }
+}
+
 @media (max-width: 640px) {
     .acc-cards {
         grid-template-columns: 1fr;
