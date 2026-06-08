@@ -278,9 +278,12 @@ async function submitCheckoutPage(event) {
   };
 
   try {
+    // BUG FIX: додаємо credentials:'include' — без нього PHP не отримує cookie сесії
+    // і $_SESSION['user_id'] завжди буде null — замовлення ніколи не збережеться в БД
     const res = await fetch('telegram_order.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(payload)
     });
     const result = await res.json();

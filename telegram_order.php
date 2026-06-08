@@ -1,7 +1,13 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-require_once 'database.php';
+
+// Підключаємо БД безпечно: якщо підключення провалиться — продовжуємо без збереження в БД
+try {
+    require_once 'database.php';
+} catch (Exception $e) {
+    $pdo = null;
+}
 
 
 // ==========================================
@@ -87,14 +93,18 @@ $postData = [
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
+// BUG FIX: використовуємо json_encode замість http_build_query, 
+// адже reply_markup — це JSON-рядок, який http_build_query екранує некоректно.
+$postData['reply_markup'] = json_encode($keyboard);
 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($httpCode == 200) {
-    // Зберігаємо замовлення в БД, якщо користувач авторизований
-    if (isset($_SESSION['user_id'])) {
+    // Зберігаємо замовлення в БД, якщо користувач авторизований і зв’язок з БД встановлений
+    if (isset($_SESSION['user_id']) && $pdo !== null) {
         try {
             $userId = $_SESSION['user_id'];
             

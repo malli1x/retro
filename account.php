@@ -61,114 +61,140 @@ foreach ($orders as $order) {
 
     <!-- ОСНОВНИЙ ВМІСТ -->
     <main class="acc-main">
-        <div class="acc-layout">
-            <!-- ЛІВА ПАНЕЛЬ (Сайдбар) -->
-            <aside class="acc-sidebar">
-                <h2 class="acc-sidebar-title">MY ACCOUNT</h2>
-                <nav class="acc-sidebar-nav">
-                    <button class="acc-tab active" data-target="tab-orders">
-                        <span class="acc-tab-icon">📦</span> Order history
-                    </button>
-                    <button class="acc-tab" data-target="tab-profile">
-                        <span class="acc-tab-icon">🪪</span> Account info
-                    </button>
-                    <button id="logout-btn" class="acc-tab acc-logout">
-                        <span class="acc-tab-icon">🚪</span> Log out
-                    </button>
-                </nav>
-            </aside>
 
-            <!-- ПРАВА ПАНЕЛЬ (Контент) -->
-            <div class="acc-content">
-                
-                <!-- Вкладка: ІСТОРІЯ ЗАМОВЛЕНЬ -->
-                <div id="tab-orders" class="acc-tab-content active">
-                    <h2 class="acc-tab-title">order history</h2>
-                    
-                    <?php if (empty($orderHistory)): ?>
-                        <p class="acc-about-text" style="text-align: left; color: var(--muted);">Ви ще не робили замовлень.</p>
-                    <?php else: ?>
-                        <div class="acc-orders-list">
-                            <?php foreach ($orderHistory as $order): ?>
-                                <div class="acc-order-item">
-                                    <div class="acc-order-header">
-                                        <span class="acc-order-id">Замовлення #<?= $order['id'] ?></span>
-                                        <span class="acc-order-date"><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></span>
-                                        <span class="acc-order-status status-<?= strtolower(str_replace(' ', '-', $order['status'])) ?>"><?= htmlspecialchars($order['status']) ?></span>
-                                    </div>
-                                    <div class="acc-order-products">
-                                        <?php foreach ($order['items'] as $item): ?>
-                                            <div class="acc-order-product">
-                                                <div class="acc-product-img">
-                                                    <?php if (!empty($item['image_url'])): ?>
-                                                        <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
-                                                    <?php else: ?>
-                                                        <span><?= htmlspecialchars($item['emoji']) ?></span>
-                                                    <?php endif; ?>
-                                                </div>
-                                                <div class="acc-product-details">
-                                                    <div class="acc-product-name"><?= htmlspecialchars($item['name']) ?></div>
-                                                    <div class="acc-product-meta"><?= $item['quantity'] ?> шт. × <?= number_format($item['price_at_purchase'], 0, '.', ' ') ?> грн</div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                    <div class="acc-order-footer">
-                                        <span>Загальна сума:</span>
-                                        <span class="acc-order-total"><?= number_format($order['total_amount'], 0, '.', ' ') ?> грн</span>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
+        <!-- ЗАГОЛОВОК ПРОФІЛЮ -->
+        <div class="acc-hero">
+            <div class="acc-hero-bg-text">PROFILE</div>
+            <div class="acc-avatar-wrap">
+                <div class="acc-avatar"><?= $avatarLetter ?></div>
+                <div class="acc-avatar-badge">✓</div>
+            </div>
+            <h1 class="acc-greeting">Привіт, ретромане!</h1>
+            <p class="acc-subtitle">Ласкаво просимо до вашого особистого кабінету</p>
+        </div>
+
+        <!-- КАРТКИ ІНФОРМАЦІЇ -->
+        <div class="acc-cards">
+
+            <!-- Картка: Дані акаунту -->
+            <div class="acc-card">
+                <div class="acc-card-header">
+                    <span class="acc-card-icon">🪪</span>
+                    <h2>Дані акаунту</h2>
                 </div>
+                <div class="acc-card-body">
+                    <div class="acc-info-row">
+                        <span class="acc-info-label">Email</span>
+                        <span class="acc-info-value"><?= $userEmail ?></span>
+                    </div>
+                    <div class="acc-info-row">
+                        <span class="acc-info-label">ID користувача</span>
+                        <span class="acc-info-value acc-id">#<?= $userId ?></span>
+                    </div>
+                    <div class="acc-info-row">
+                        <span class="acc-info-label">Статус</span>
+                        <span class="acc-info-value acc-status-badge">✅ Активний</span>
+                    </div>
+                </div>
+            </div>
 
-                <!-- Вкладка: ПРОФІЛЬ / ДАНІ -->
-                <div id="tab-profile" class="acc-tab-content">
-                    <h2 class="acc-tab-title">account info</h2>
-                    
-                    <div class="acc-cards-compact">
-                        <!-- Дані акаунту -->
-                        <div class="acc-card">
-                            <div class="acc-card-header">
-                                <span class="acc-card-icon">🪪</span>
-                                <h2>Ваші дані</h2>
-                            </div>
-                            <div class="acc-card-body">
-                                <div class="acc-info-row">
-                                    <span class="acc-info-label">Email</span>
-                                    <span class="acc-info-value"><?= $userEmail ?></span>
-                                </div>
-                                <div class="acc-info-row">
-                                    <span class="acc-info-label">ID користувача</span>
-                                    <span class="acc-info-value acc-id">#<?= $userId ?></span>
-                                </div>
-                                <div class="acc-info-row">
-                                    <span class="acc-info-label">Статус</span>
-                                    <span class="acc-info-value acc-status-badge">✅ Активний</span>
-                                </div>
-                            </div>
+            <!-- Картка: Швидкі дії -->
+            <div class="acc-card">
+                <div class="acc-card-header">
+                    <span class="acc-card-icon">⚡</span>
+                    <h2>Швидкі дії</h2>
+                </div>
+                <div class="acc-card-body acc-actions-list">
+                    <a href="index.html" class="acc-action-btn acc-action-catalog">
+                        <span>📦</span> Переглянути каталог
+                    </a>
+                    <a href="index.html#catalog" class="acc-action-btn acc-action-cart">
+                        <span>🛒</span> Мої замовлення
+                    </a>
+                    <button id="logout-btn" class="acc-action-btn acc-action-logout">
+                        <span>🚪</span> Вийти з акаунту
+                    </button>
+                </div>
+            </div>
+
+            <!-- Картка: Про платформу -->
+            <div class="acc-card acc-card-wide">
+                <div class="acc-card-header">
+                    <span class="acc-card-icon">📻</span>
+                    <h2>RetroTech Hub</h2>
+                </div>
+                <div class="acc-card-body">
+                    <p class="acc-about-text">
+                        Ти частина спільноти справжніх цінителів вінтажної техніки.
+                        Досліджуй колекцію, знаходь раритети та насолоджуйся естетикою минулого.
+                    </p>
+                    <div class="acc-stats">
+                        <div class="acc-stat">
+                            <span class="acc-stat-num">500+</span>
+                            <span class="acc-stat-label">Товарів</span>
                         </div>
-
-                        <!-- Про платформу -->
-                        <div class="acc-card">
-                            <div class="acc-card-header">
-                                <span class="acc-card-icon">📻</span>
-                                <h2>RetroTech Hub</h2>
-                            </div>
-                            <div class="acc-card-body">
-                                <p class="acc-about-text">
-                                    Ти частина спільноти справжніх цінителів вінтажної техніки.
-                                    Досліджуй колекцію, знаходь раритети та насолоджуйся естетикою минулого.
-                                </p>
-                            </div>
+                        <div class="acc-stat">
+                            <span class="acc-stat-num">3</span>
+                            <span class="acc-stat-label">Категорії</span>
+                        </div>
+                        <div class="acc-stat">
+                            <span class="acc-stat-num">Y2K</span>
+                            <span class="acc-stat-label">Стиль</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
+        <!-- ІСТОРІЯ ЗАМОВЛЕНЬ -->
+        <div class="acc-card acc-card-wide acc-orders-card">
+            <div class="acc-card-header">
+                <span class="acc-card-icon">📦</span>
+                <h2>Історія замовлень</h2>
+            </div>
+            <div class="acc-card-body">
+                <?php if (empty($orderHistory)): ?>
+                    <p class="acc-about-text" style="text-align: center; color: #7A7265;">Ви ще не робили замовлень.</p>
+                <?php else: ?>
+                    <div class="acc-orders-list">
+                        <?php foreach ($orderHistory as $order): ?>
+                            <div class="acc-order-item">
+                                <div class="acc-order-header">
+                                    <span class="acc-order-id">Замовлення #<?= $order['id'] ?></span>
+                                    <span class="acc-order-date"><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></span>
+                                    <span class="acc-order-status status-<?= strtolower(str_replace(' ', '-', $order['status'])) ?>"><?= htmlspecialchars($order['status']) ?></span>
+                                </div>
+                                <div class="acc-order-products">
+                                    <?php foreach ($order['items'] as $item): ?>
+                                        <div class="acc-order-product">
+                                            <div class="acc-product-img">
+                                                <?php if (!empty($item['image_url'])): ?>
+                                                    <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
+                                                <?php else: ?>
+                                                    <span><?= htmlspecialchars($item['emoji']) ?></span>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="acc-product-details">
+                                                <div class="acc-product-name"><?= htmlspecialchars($item['name']) ?></div>
+                                                <div class="acc-product-meta"><?= $item['quantity'] ?> шт. × <?= number_format($item['price_at_purchase'], 0, '.', ' ') ?> грн</div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="acc-order-footer">
+                                    <span>Загальна сума:</span>
+                                    <span class="acc-order-total"><?= number_format($order['total_amount'], 0, '.', ' ') ?> грн</span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
+
+        </div><!-- /.acc-cards -->
+
     </main>
+
 
     <!-- FOOTER -->
     <footer class="acc-footer">
