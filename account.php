@@ -108,7 +108,7 @@ foreach ($orders as $order) {
                     <a href="index.html" class="acc-action-btn acc-action-catalog">
                         <span>📦</span> Переглянути каталог
                     </a>
-                    <a href="index.html#catalog" class="acc-action-btn acc-action-cart">
+                    <a href="#orders" class="acc-action-btn acc-action-cart">
                         <span>🛒</span> Мої замовлення
                     </a>
                     <button id="logout-btn" class="acc-action-btn acc-action-logout">
@@ -146,7 +146,7 @@ foreach ($orders as $order) {
             </div>
 
         <!-- ІСТОРІЯ ЗАМОВЛЕНЬ -->
-        <div class="acc-card acc-card-wide acc-orders-card">
+        <div id="orders" class="acc-card acc-card-wide acc-orders-card">
             <div class="acc-card-header">
                 <span class="acc-card-icon">📦</span>
                 <h2>Історія замовлень</h2>
