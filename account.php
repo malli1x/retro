@@ -117,31 +117,10 @@ foreach ($orders as $order) {
                 </div>
             </div>
 
-            <!-- Картка: Про платформу -->
+            <!-- Картка: GIF -->
             <div class="acc-card acc-card-wide">
-                <div class="acc-card-header">
-                    <span class="acc-card-icon">📻</span>
-                    <h2>RetroTech Hub</h2>
-                </div>
-                <div class="acc-card-body">
-                    <p class="acc-about-text">
-                        Ти частина спільноти справжніх цінителів вінтажної техніки.
-                        Досліджуй колекцію, знаходь раритети та насолоджуйся естетикою минулого.
-                    </p>
-                    <div class="acc-stats">
-                        <div class="acc-stat">
-                            <span class="acc-stat-num">500+</span>
-                            <span class="acc-stat-label">Товарів</span>
-                        </div>
-                        <div class="acc-stat">
-                            <span class="acc-stat-num">3</span>
-                            <span class="acc-stat-label">Категорії</span>
-                        </div>
-                        <div class="acc-stat">
-                            <span class="acc-stat-num">Y2K</span>
-                            <span class="acc-stat-label">Стиль</span>
-                        </div>
-                    </div>
+                <div class="acc-card-body" style="display:flex; justify-content:center; align-items:center; padding: 1rem;">
+                    <img src="cheer.gif" alt="Cheer!" style="max-width:100%; border: 2px solid var(--dark); display:block;">
                 </div>
             </div>
 
